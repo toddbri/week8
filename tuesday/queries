@@ -1,0 +1,27 @@
+1. select * from review inner join restaurant on review.restaurant_id = restaurant.id where restaurant.id = 6
+
+2. select * from review inner join restaurant on review.restaurant_id = restaurant.id where restaurant.name ilike 'frank%'
+
+3. select * from review inner join reviewer on review.reviewer_id = reviewer.id where reviewer.name = 'tbriley'
+
+4. select restaurant.name, review.review from restaurant inner join review on restaurant.id = review.restaurant_id
+
+5. select restaurant.name, avg(stars) from restaurant inner join review on restaurant.id = review.restaurant_id group by restaurant.name
+
+6. select restaurant.name, count(review.id) from restaurant inner join review on restaurant.id = review.restaurant_id by restaurant.name
+
+7. select restaurant.name, review.review, reviewer.name from review join restaurant on restaurant.id = review.restaurant_id join reviewer on review.reviewer_id = reviewer.id
+
+    a) select restaurant.name, review.stars, review.review, reviewer.name from review join restaurant on restaurant.id = review.restaurant_id join reviewer on review.reviewer_id = reviewer.id where reviewer.name = 'tbriley'
+    b) select restaurant.name, review.stars, review.review, reviewer.name from review join restaurant on restaurant.id = review.restaurant_id join reviewer on review.reviewer_id = reviewer.id order by reviewer.name
+    c) select restaurant.name, review.stars, review.review, reviewer.name from review join restaurant on restaurant.id = review.restaurant_id join reviewer on review.reviewer_id = reviewer.id order by restaurant.name, review.stars desc
+
+8. select reviewer.name, avg(review.stars) from reviewer inner join review on reviewer.id = review.reviewer_id group by reviewer.name
+
+9. select reviewer.name, min(review.stars) from reviewer inner join review on reviewer.id = review.reviewer_id
+
+10. select restaurant.category, count(restaurant.id) from restaurant group by restaurant.category
+
+11. select restaurant.name, count(review.id) from restaurant inner join review on restaurant.id = review.restaurant_id  where review.stars > 2 group by restaurant.name
+
+12. select restaurant.category, avg(review.stars) from restaurant inner join review on restaurant.id = review.restaurant_id group by restaurant.category

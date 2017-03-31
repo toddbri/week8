@@ -1,0 +1,808 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.2
+-- Dumped by pg_dump version 9.6.2
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: album; Type: TABLE; Schema: public; Owner: todd
+--
+
+CREATE TABLE album (
+    id integer NOT NULL,
+    name character varying,
+    artist integer,
+    released integer
+);
+
+
+ALTER TABLE album OWNER TO todd;
+
+--
+-- Name: album_id_seq; Type: SEQUENCE; Schema: public; Owner: todd
+--
+
+CREATE SEQUENCE album_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE album_id_seq OWNER TO todd;
+
+--
+-- Name: album_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: todd
+--
+
+ALTER SEQUENCE album_id_seq OWNED BY album.id;
+
+
+--
+-- Name: artist; Type: TABLE; Schema: public; Owner: todd
+--
+
+CREATE TABLE artist (
+    id integer NOT NULL,
+    name character varying
+);
+
+
+ALTER TABLE artist OWNER TO todd;
+
+--
+-- Name: artist_id_seq; Type: SEQUENCE; Schema: public; Owner: todd
+--
+
+CREATE SEQUENCE artist_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE artist_id_seq OWNER TO todd;
+
+--
+-- Name: artist_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: todd
+--
+
+ALTER SEQUENCE artist_id_seq OWNED BY artist.id;
+
+
+--
+-- Name: features; Type: TABLE; Schema: public; Owner: todd
+--
+
+CREATE TABLE features (
+    artist integer,
+    album integer
+);
+
+
+ALTER TABLE features OWNER TO todd;
+
+--
+-- Name: genre; Type: TABLE; Schema: public; Owner: todd
+--
+
+CREATE TABLE genre (
+    id integer NOT NULL,
+    name character varying
+);
+
+
+ALTER TABLE genre OWNER TO todd;
+
+--
+-- Name: genre_id_seq; Type: SEQUENCE; Schema: public; Owner: todd
+--
+
+CREATE SEQUENCE genre_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE genre_id_seq OWNER TO todd;
+
+--
+-- Name: genre_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: todd
+--
+
+ALTER SEQUENCE genre_id_seq OWNED BY genre.id;
+
+
+--
+-- Name: instruments; Type: TABLE; Schema: public; Owner: todd
+--
+
+CREATE TABLE instruments (
+    id integer NOT NULL,
+    type character varying
+);
+
+
+ALTER TABLE instruments OWNER TO todd;
+
+--
+-- Name: instruments_id_seq; Type: SEQUENCE; Schema: public; Owner: todd
+--
+
+CREATE SEQUENCE instruments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE instruments_id_seq OWNER TO todd;
+
+--
+-- Name: instruments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: todd
+--
+
+ALTER SEQUENCE instruments_id_seq OWNED BY instruments.id;
+
+
+--
+-- Name: song; Type: TABLE; Schema: public; Owner: todd
+--
+
+CREATE TABLE song (
+    id integer NOT NULL,
+    name character varying,
+    writer integer
+);
+
+
+ALTER TABLE song OWNER TO todd;
+
+--
+-- Name: song_id_seq; Type: SEQUENCE; Schema: public; Owner: todd
+--
+
+CREATE SEQUENCE song_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE song_id_seq OWNER TO todd;
+
+--
+-- Name: song_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: todd
+--
+
+ALTER SEQUENCE song_id_seq OWNED BY song.id;
+
+
+--
+-- Name: track; Type: TABLE; Schema: public; Owner: todd
+--
+
+CREATE TABLE track (
+    id integer NOT NULL,
+    album integer,
+    length integer,
+    song integer,
+    genre integer
+);
+
+
+ALTER TABLE track OWNER TO todd;
+
+--
+-- Name: track_id_seq; Type: SEQUENCE; Schema: public; Owner: todd
+--
+
+CREATE SEQUENCE track_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE track_id_seq OWNER TO todd;
+
+--
+-- Name: track_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: todd
+--
+
+ALTER SEQUENCE track_id_seq OWNED BY track.id;
+
+
+--
+-- Name: album id; Type: DEFAULT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY album ALTER COLUMN id SET DEFAULT nextval('album_id_seq'::regclass);
+
+
+--
+-- Name: artist id; Type: DEFAULT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY artist ALTER COLUMN id SET DEFAULT nextval('artist_id_seq'::regclass);
+
+
+--
+-- Name: genre id; Type: DEFAULT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY genre ALTER COLUMN id SET DEFAULT nextval('genre_id_seq'::regclass);
+
+
+--
+-- Name: instruments id; Type: DEFAULT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY instruments ALTER COLUMN id SET DEFAULT nextval('instruments_id_seq'::regclass);
+
+
+--
+-- Name: song id; Type: DEFAULT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY song ALTER COLUMN id SET DEFAULT nextval('song_id_seq'::regclass);
+
+
+--
+-- Name: track id; Type: DEFAULT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY track ALTER COLUMN id SET DEFAULT nextval('track_id_seq'::regclass);
+
+
+--
+-- Data for Name: album; Type: TABLE DATA; Schema: public; Owner: todd
+--
+
+COPY album (id, name, artist, released) FROM stdin;
+1	mother's milk	1	1989
+2	californication	1	1999
+3	by the way	1	2002
+4	stadium arcadium	1	2006
+5	aja	2	1977
+6	pretzel logic	2	1974
+7	katy lied	2	1975
+9	countdown to ecstasy	2	1973
+10	can't buy a thrill	2	1972
+11	gaucho	2	1980
+12	a heart full of blues	3	1962
+13	mr. blues	3	1963
+14	more	3	1961
+15	reflections	3	2003
+16	better than ever	3	1993
+17	led zeppelin	4	1969
+18	led zeppelin ii	4	1969
+19	led zeppelin iii	4	1970
+20	led zeppelin iv	4	1971
+22	physical graffiti	4	1975
+23	presence	4	1976
+24	in through the out door	4	1979
+25	death certificate	5	1991
+26	lethal injection	5	1993
+27	raw footage	5	2008
+28	rising	6	1976
+29	long live rock 'n' roll	6	1978
+30	down to earch	6	1979
+31	straight between the eyes	6	1982
+32	in-a-gadda-da-vida	7	1968
+33	ball	7	1969
+34	scorching beauty	7	1975
+35	second helping	8	1974
+36	nuthin fancy	8	1975
+37	gimme back my bullets	8	1976
+38	street survivors	8	1977
+39	after school session	9	1957
+40	one dozen berrys	9	1958
+41	laid back	10	1973
+42	two the hard way	10	1977
+43	low country blues	10	2011
+44	out of our heads	11	1965
+45	let it bleed	11	1969
+46	sticky fingers	11	1971
+47	blizzard of oz	12	1980
+48	bark at the moon	12	1983
+49	black sabbath	13	1970
+50	paranoid	13	1970
+51	the lies, the sex, the violence	14	1988
+52	chinese democracy	14	2008
+53	hip hop is dead	15	2006
+54	life is good	15	2012
+55	ticket to ride	16	1969
+56	close to you	16	1970
+57	horizon	16	1975
+58	the clash	17	1977
+59	london calling	17	1979
+60	cut the crap	17	1985
+61	do it good	18	1974
+62	the sound of sunshine	18	1975
+63	boy	19	1980
+64	war	19	1983
+65	sublime	20	1996
+66	robbin' the hood	20	1994
+67	catch a fire	21	1973
+68	rasta revolution	21	1974
+69	john barleycorn must die	23	1970
+70	low spark of high heeled boys	23	1971
+71	damn the torpedoes	24	1979
+72	long after dark	24	1982
+73	business as usual	25	1982
+74	cargo	25	1983
+75	movement	26	1981
+76	brotherhood	26	1986
+8	the royal scam	2	1976
+21	houses of the holy	4	1973
+77	business as usual	25	1982
+78	cargo	25	1983
+79	movement	26	1981
+80	low-life	26	1985
+81	brotherhood	26	1986
+82	wilder mind	27	2009
+83	white women	28	2014
+84	empty sky	29	1969
+85	honky chateau	29	1972
+86	midnight marauders	30	1993
+87	born to run	31	1975
+88	born in the USA	31	1984
+89	representing the mambo	32	1990
+90	feats dont fail me now	32	1974
+91	at fillmore east	33	1970
+92	eat a peach	33	1972
+93	synchronicity	34	1983
+94	electric ladyland	35	1968
+95	in utero	36	1993
+96	smoke and fire	37	1970
+97	morrison hotel	38	1970
+98	texas flood	39	1983
+99	eliminator	40	1983
+\.
+
+
+--
+-- Name: album_id_seq; Type: SEQUENCE SET; Schema: public; Owner: todd
+--
+
+SELECT pg_catalog.setval('album_id_seq', 99, true);
+
+
+--
+-- Data for Name: artist; Type: TABLE DATA; Schema: public; Owner: todd
+--
+
+COPY artist (id, name) FROM stdin;
+1	red hot chili peppers
+2	steely dan
+3	b.b. king
+4	led zeppelin
+5	ice cube
+6	rainbow
+7	iron butterfly
+8	lynyrd skynyrd
+9	chuck berry
+12	ozzie osbourne
+13	black sabbath
+15	nas
+17	the clash
+19	u2
+20	sublime
+21	bob marley
+22	rush
+23	traffic
+25	men at work
+26	new order
+27	munford and sons
+28	chromeo
+29	elton john
+30	a tribe called quest
+31	bruce springsteen
+32	little feat
+33	allman brothers
+34	the police
+35	jimmy hendrix
+36	nirvana
+37	lord sutch
+38	the doors
+39	stevie ray vaughan
+40	zz top
+10	gregg allman
+11	the rolling stones
+14	guns n' roses
+16	carpenters
+18	kc & the sunshine band
+24	tom petty & the hearbreakers
+\.
+
+
+--
+-- Name: artist_id_seq; Type: SEQUENCE SET; Schema: public; Owner: todd
+--
+
+SELECT pg_catalog.setval('artist_id_seq', 40, true);
+
+
+--
+-- Data for Name: features; Type: TABLE DATA; Schema: public; Owner: todd
+--
+
+COPY features (artist, album) FROM stdin;
+\.
+
+
+--
+-- Data for Name: genre; Type: TABLE DATA; Schema: public; Owner: todd
+--
+
+COPY genre (id, name) FROM stdin;
+1	rock
+2	new wave
+3	hip hop
+4	jazz
+5	blues
+6	easy listening
+7	rock
+8	new wave
+9	hip hop
+10	jazz
+11	blues
+12	easy listening
+\.
+
+
+--
+-- Name: genre_id_seq; Type: SEQUENCE SET; Schema: public; Owner: todd
+--
+
+SELECT pg_catalog.setval('genre_id_seq', 12, true);
+
+
+--
+-- Data for Name: instruments; Type: TABLE DATA; Schema: public; Owner: todd
+--
+
+COPY instruments (id, type) FROM stdin;
+\.
+
+
+--
+-- Name: instruments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: todd
+--
+
+SELECT pg_catalog.setval('instruments_id_seq', 1, false);
+
+
+--
+-- Data for Name: song; Type: TABLE DATA; Schema: public; Owner: todd
+--
+
+COPY song (id, name, writer) FROM stdin;
+1	good time boys	1
+2	higher ground	1
+3	subway to venus	1
+4	magic johnson	1
+5	knock me down	1
+6	around the world	1
+7	scare tissue	1
+8	californication	1
+9	by the way	1
+10	midnight	1
+11	dani california	1
+12	snow(hey oh)	1
+13	black cow	2
+14	aja	2
+15	night by night	2
+16	pretzel logic	2
+17	black friday	2
+18	doctor wu	2
+19	kid charlemagne	2
+20	green earrings	2
+21	do it again	2
+22	turn that hearbeat over again	2
+23	bodhisattva	2
+24	your gold teeth	2
+25	babylon sisters	2
+26	time out of mind	2
+27	you're gonna miss me	3
+28	wrong road	3
+29	young dreamers	3
+30	chains of love	3
+31	shut your mouth	3
+32	just like a woman	3
+33	exactly like you	3
+34	on my word of honor	3
+35	feel like a million	3
+36	if i lost you	3
+37	you shook me	4
+38	how many more times	4
+39	the lemon song	4
+40	bring it on home	4
+41	since i've been loving you	4
+42	tangerine	4
+43	that's the way	4
+44	misty mountain hop	4
+45	when the levee breaks	4
+46	over the hills and far away	4
+47	no quarter	4
+48	custard pie	4
+49	ten years gone	4
+50	achilles last stand	4
+51	tea for one	4
+52	hot dog	4
+53	in the evening	4
+54	the funeral	5
+55	my summer vacation	5
+56	really doe	5
+57	ghetto bird	5
+58	it takes a nation	5
+59	hood mentality	5
+60	tarot woman	6
+61	run with the wolf	6
+62	who can it be now	25
+63	land down under	25
+64	i will wait	27
+65	the cave	27
+66	jealous	28
+67	sexy socialite	28
+68	rocket man	29
+69	tiny dancer	29
+70	we got the jazz	30
+71	solid wall of sound	30
+72	space program	30
+73	bustas lament	30
+74	born to run	31
+75	born in the usa	31
+76	spanish moon	32
+77	aint wastin time no more	33
+78	blue sky	33
+79	roxanne	34
+80	message in a bottle	34
+81	purple haze	35
+82	crosstown traffic	35
+83	come as you are	36
+84	lithium	36
+85	cause i love you	37
+86	flashing lights	37
+87	roadhouse blues	38
+88	light my fire	38
+89	texas flood	39
+90	pride and joy	39
+91	little wing	39
+92	sharp dressed man	40
+93	la grange	40
+94	cheap sunglasses	40
+95	tush	40
+96	legs	40
+\.
+
+
+--
+-- Name: song_id_seq; Type: SEQUENCE SET; Schema: public; Owner: todd
+--
+
+SELECT pg_catalog.setval('song_id_seq', 96, true);
+
+
+--
+-- Data for Name: track; Type: TABLE DATA; Schema: public; Owner: todd
+--
+
+COPY track (id, album, length, song, genre) FROM stdin;
+1	1	301	1	1
+2	1	221	2	1
+3	1	265	3	1
+4	1	177	4	1
+5	1	223	5	1
+6	2	238	6	1
+7	2	217	7	1
+8	2	321	8	1
+9	3	217	9	1
+10	4	282	10	1
+11	4	282	11	1
+12	4	334	12	1
+13	5	310	13	1
+14	5	480	14	1
+15	6	220	15	1
+16	6	272	16	1
+17	7	221	17	1
+18	7	236	18	1
+19	8	279	19	1
+20	8	245	20	1
+21	10	296	21	1
+22	10	298	22	1
+23	9	318	23	1
+24	9	419	24	1
+25	11	350	25	1
+26	11	253	26	1
+27	12	276	27	5
+28	12	318	28	5
+29	13	364	29	5
+30	13	298	30	5
+31	14	178	31	5
+32	14	240	32	5
+33	15	201	33	5
+34	15	202	34	5
+35	16	221	35	5
+36	16	403	36	5
+37	17	357	37	1
+38	17	508	38	1
+39	18	379	39	1
+40	18	261	40	1
+41	19	443	41	1
+42	19	130	42	1
+43	19	337	43	1
+44	20	278	44	1
+45	20	428	45	1
+46	21	289	46	1
+47	21	420	47	1
+48	22	254	48	1
+49	22	393	49	1
+50	23	631	50	1
+51	23	568	51	1
+52	24	197	52	1
+53	24	401	53	1
+54	25	97	54	3
+55	25	236	55	3
+56	26	268	56	3
+57	26	231	57	3
+58	27	206	58	3
+59	27	311	59	3
+60	28	364	60	1
+61	28	223	61	1
+\.
+
+
+--
+-- Name: track_id_seq; Type: SEQUENCE SET; Schema: public; Owner: todd
+--
+
+SELECT pg_catalog.setval('track_id_seq', 61, true);
+
+
+--
+-- Name: album album_pkey; Type: CONSTRAINT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY album
+    ADD CONSTRAINT album_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: artist artist_pkey; Type: CONSTRAINT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY artist
+    ADD CONSTRAINT artist_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: genre genre_pkey; Type: CONSTRAINT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY genre
+    ADD CONSTRAINT genre_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: instruments instruments_pkey; Type: CONSTRAINT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY instruments
+    ADD CONSTRAINT instruments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: song song_pkey; Type: CONSTRAINT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY song
+    ADD CONSTRAINT song_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: track track_pkey; Type: CONSTRAINT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY track
+    ADD CONSTRAINT track_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: album album_artist_fkey; Type: FK CONSTRAINT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY album
+    ADD CONSTRAINT album_artist_fkey FOREIGN KEY (artist) REFERENCES artist(id);
+
+
+--
+-- Name: features features_album_fkey; Type: FK CONSTRAINT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY features
+    ADD CONSTRAINT features_album_fkey FOREIGN KEY (album) REFERENCES album(id);
+
+
+--
+-- Name: features features_artist_fkey; Type: FK CONSTRAINT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY features
+    ADD CONSTRAINT features_artist_fkey FOREIGN KEY (artist) REFERENCES artist(id);
+
+
+--
+-- Name: song song_writer_fkey; Type: FK CONSTRAINT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY song
+    ADD CONSTRAINT song_writer_fkey FOREIGN KEY (writer) REFERENCES artist(id);
+
+
+--
+-- Name: track track_album_fkey; Type: FK CONSTRAINT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY track
+    ADD CONSTRAINT track_album_fkey FOREIGN KEY (album) REFERENCES album(id);
+
+
+--
+-- Name: track track_genre_fkey; Type: FK CONSTRAINT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY track
+    ADD CONSTRAINT track_genre_fkey FOREIGN KEY (genre) REFERENCES genre(id);
+
+
+--
+-- Name: track track_song_fkey; Type: FK CONSTRAINT; Schema: public; Owner: todd
+--
+
+ALTER TABLE ONLY track
+    ADD CONSTRAINT track_song_fkey FOREIGN KEY (song) REFERENCES song(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
